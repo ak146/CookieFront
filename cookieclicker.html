@@ -1,0 +1,408 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mortenson Clicker</title>
+  <style>
+  body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: url('https://media.architecturaldigest.com/photos/5ab53b6e2ed63a101d561e70/16:9/w_2560%2Cc_limit/Tout-Hamburg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #000000;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin: 10px 0;
+      color: #000000;
+    }
+
+    #cookie-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    #cookie {
+      max-width: 100%;
+      height: auto;
+      border-radius: 50%;
+      cursor: pointer;
+      margin-right: 20px;
+      border: 5px solid #7f2d74; /* Added border */
+      transition: transform 0.2s;
+    }
+
+    #cookie:hover {
+      transform: scale(1.1);
+    }
+
+    #points {
+      font-size: 1.5em;
+      color: #000000;
+    }
+
+    .shop {
+      background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .shop h2 {
+      margin-top: 0;
+      font-size: 1.8em;
+      color: #575757;
+    }
+
+    .shop-item {
+      margin: 20px 0;
+      border-top: 1px solid #ddd;
+      padding-top: 20px;
+    }
+
+    .shop-item p,
+    .shop-item button {
+      margin: 10px 0;
+      color: #575757;
+    }
+
+    .shop-item button {
+      padding: 12px 24px;
+      font-size: 1.2em;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .shop-item button:hover {
+      background-color: #45a049;
+    }
+
+    .shop-item button:disabled {
+      background-color: #ddd;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <h1>Cookie Clicker</h1>
+  <p>Click the cookie to earn points!</p>
+  <p>
+  <img id="cookie" src="https://www.realsimple.com/thmb/uwmEcWtairipZTGavdWVbkV_dqw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/chocolatechip-cookies_300-d6a402fc30814fdf87af28be97b5fcdc.jpg" alt="Cookie Image">
+  <p>Points: <span id="points">0</span></p>
+
+  <div class="shop">
+    <h2>Shop</h2>
+    <div class="shop-item">
+      <p>Upgrade Click Power (+1 per click) - Cost: <span id="upgradeClickCost">25</span> points - Purchased: <span id="upgradeClickCount">0</span></p>
+      <button id="upgradeClick">Buy</button>
+    </div>
+    <div class="shop-item">
+      <p>Auto Click (1 click per second) - Cost: <span id="autoClickCost">100</span> points - Purchased: <span id="autoClickCount">0</span></p>
+      <button id="autoClick">Buy</button>
+    </div>
+    <div class="shop-item">
+      <p>Double Click Power (2x per click) - Cost: <span id="doubleClickCost">500</span> points - Purchased: <span id="doubleClickCount">0</span></p>
+      <button id="doubleClick">Buy</button>
+    </div>
+    <div class="shop-item">
+      <p>Auto Double Click (2 clicks per second) - Cost: <span id="autoDoubleClickCost">1000</span> points - Purchased: <span id="autoDoubleClickCount">0</span></p>
+      <button id="autoDoubleClick">Buy</button>
+    </div>
+    <div class="shop-item">
+      <p>New Skin for Clicker - Cost: <span id="newSkinCost">100</span> points</p>
+      <button id="buyNewSkin">Buy New Skin</button>
+    </div>
+  </div>
+    
+    <script>let newSkinCost = 100;
+      let newSkinPurchased = false;
+    
+      const buyNewSkinButton = document.getElementById('buyNewSkin');
+      const newSkinCostDisplay = document.getElementById('newSkinCost');
+      function updatePointsDisplay() {
+        pointsDisplay.textContent = points;
+        buyNewSkinButton.disabled = newSkinPurchased || points < newSkinCost; // Disable new skin button if already purchased or not enough points
+}
+function updateShopDisplay() {
+  newSkinCostDisplay.textContent = newSkinCost;
+  // Update other shop item displays as needed
+}
+
+cookie.addEventListener('click', () => {
+  points += clickPower;
+  updatePointsDisplay();
+});
+
+buyNewSkinButton.addEventListener('click', () => {
+  if (points >= newSkinCost && !newSkinPurchased) {
+    points -= newSkinCost;
+    cookie.src = "https://as2.ftcdn.net/v2/jpg/02/47/71/45/1000_F_247714590_52fGc5te3Duvupq9ztw8S1ncji7z99S5.jpg"; // URL of the new skin
+    cookie.style.maxWidth = "400px"; // Adjust size as needed
+    cookie.style.height = "400px"; // Adjust if a specific height is desired
+    newSkinPurchased = true;
+    updatePointsDisplay();
+  } else {
+    alert('Not enough points or skin already purchased.');
+  }
+});
+
+// Call updateShopDisplay at the end of your script to ensure shop item statuses are correctly initialized
+updateShopDisplay();
+    
+    </script>
+  
+
+  <div class="minigames">
+    <h2>Mini Games</h2>
+    <p>Guess the number between 1 and 2:</p>
+    <input type="number" id="guessInput" min="1" max="2">
+    <p>Enter the amount of points you want to pay to play:</p>
+    <input type="number" id="gameCostInput" min="1">
+    <button onclick="playGuessingGame()">Play</button>
+    <p id="guessResult"></p>
+  </div>
+
+  <script>
+    let points = 0;
+    let clickPower = 1;
+    let autoClickEnabled = false;
+    let autoClickInterval;
+    let upgradeClickCount = 0;
+    let autoClickCount = 0;
+    let doubleClickCount = 0;
+    let autoDoubleClickCount = 0;
+    let upgradeClickCost = 25;
+    let autoClickCost = 100;
+    let doubleClickCost = 500;
+    let autoDoubleClickCost = 1000;
+
+    const pointsDisplay = document.getElementById('points');
+    const upgradeClickCostDisplay = document.getElementById('upgradeClickCost');
+    const autoClickCostDisplay = document.getElementById('autoClickCost');
+    const doubleClickCostDisplay = document.getElementById('doubleClickCost');
+    const autoDoubleClickCostDisplay = document.getElementById('autoDoubleClickCost');
+    const upgradeClickCountDisplay = document.getElementById('upgradeClickCount');
+    const autoClickCountDisplay = document.getElementById('autoClickCount');
+    const doubleClickCountDisplay = document.getElementById('doubleClickCount');
+    const autoDoubleClickCountDisplay = document.getElementById('autoDoubleClickCount');
+    const cookie = document.getElementById('cookie');
+    const upgradeClickButton = document.getElementById('upgradeClick');
+    const autoClickButton = document.getElementById('autoClick');
+    const doubleClickButton = document.getElementById('doubleClick');
+    const autoDoubleClickButton = document.getElementById('autoDoubleClick');
+
+    cookie.addEventListener('click', () => {
+      points += clickPower;
+      updatePointsDisplay();
+      update_user()
+
+    });
+
+    upgradeClickButton.addEventListener('click', () => {
+      if (points >= upgradeClickCost) {
+        points -= upgradeClickCost;
+        clickPower++;
+        upgradeClickCount++;
+        upgradeClickCost = Math.floor(10 * Math.pow(1.1, upgradeClickCount)); // Exponential increase in cost
+        updateShopDisplay();
+        updatePointsDisplay();
+      } else {
+        alert('Not enough points!');
+      }
+    });
+
+    autoClickButton.addEventListener('click', () => {
+      if (points >= autoClickCost && !autoClickEnabled) {
+        points -= autoClickCost;
+        autoClickEnabled = true;
+        autoClickInterval = setInterval(() => {
+          points += clickPower;
+          updatePointsDisplay();
+        }, 1000);
+        autoClickCount++;
+        autoClickCost = Math.floor(50 * Math.pow(1.1, autoClickCount)); // Exponential increase in cost
+        autoClickButton.disabled = true;
+        updateShopDisplay();
+        updatePointsDisplay();
+      } else if (autoClickEnabled) {
+        alert('Auto Click already enabled!');
+      } else {
+        alert('Not enough points!');
+      }
+    });
+
+    doubleClickButton.addEventListener('click', () => {
+      if (points >= doubleClickCost) {
+        points -= doubleClickCost;
+        clickPower *= 2;
+        doubleClickCount++;
+        doubleClickCost = Math.floor(100 * Math.pow(1.1, doubleClickCount)); // Exponential increase in cost
+        updateShopDisplay();
+        updatePointsDisplay();
+      } else {
+        alert('Not enough points!');
+      }
+    });
+
+    autoDoubleClickButton.addEventListener('click', () => {
+      if (points >= autoDoubleClickCost && !autoClickEnabled) {
+        points -= autoDoubleClickCost;
+        autoClickEnabled = true;
+        autoClickInterval = setInterval(() => {
+          points += clickPower * 2;
+          updatePointsDisplay();
+        }, 500); // Execute every 0.5 seconds for double click
+        autoDoubleClickCount++;
+        autoDoubleClickCost = Math.floor(200000 * Math.pow(1.1, autoDoubleClickCount)); // Exponential increase in cost
+        autoDoubleClickButton.disabled = true;
+        updateShopDisplay();
+        updatePointsDisplay();
+      } else if (autoClickEnabled) {
+        alert('Auto Double Click already enabled!');
+      } else {
+        alert('Not enough points!');
+      }
+    });
+
+    function updatePointsDisplay() {
+      pointsDisplay.textContent = points;
+      if (points >= 200) {
+        miniGamesSection.style.display = 'block'; // Display the mini-games section when the player has at least 200 points
+      }
+    }
+
+    function updateShopDisplay() {
+      upgradeClickCostDisplay.textContent = upgradeClickCost;
+      autoClickCostDisplay.textContent = autoClickCost;
+      doubleClickCostDisplay.textContent = doubleClickCost;
+      autoDoubleClickCostDisplay.textContent = autoDoubleClickCost;
+      upgradeClickCountDisplay.textContent = upgradeClickCount;
+      autoClickCountDisplay.textContent = autoClickCount;
+      doubleClickCountDisplay.textContent = doubleClickCount;
+      autoDoubleClickCountDisplay.textContent = autoDoubleClickCount;
+    }
+
+    function playGuessingGame() {
+      const guessInput = document.getElementById('guessInput');
+      const gameCostInput = document.getElementById('gameCostInput');
+      const guessResult = document.getElementById('guessResult');
+
+      // Check if the player has enough points to play the game
+      if (points >= gameCostInput.value) {
+        points -= gameCostInput.value; // Deduct the chosen points for playing the game
+
+        const randomNumber = Math.floor(Math.random() * 2) + 1; // Generate a random number between 1 and 2
+
+        if (parseInt(guessInput.value) === randomNumber) {
+          points += parseInt(gameCostInput.value) * 2; // Double the points if the guess is correct
+          guessResult.textContent = 'Congratulations! You won and doubled your points!';
+        } else {
+          guessResult.textContent = 'Sorry, try again!';
+        }
+        
+        updatePointsDisplay(); // Update the points display after playing the game
+      } else {
+        guessResult.textContent = 'Not enough points to play the game!';
+      }
+    }
+
+   
+
+
+
+
+    function update_user(){
+
+      const currentUrl = window.location.href;
+    //  const uid_temp = localStorage.getItem('uid'); // Retrieve the JWT from local storage
+      //if (!uid_temp) {
+      //  console.log('No UID found in local storage.');
+      //  return;
+   // }
+   // console.log(uid_temp)
+// Create a URLSearchParams instance with the query string part of the URL
+    const urlParams = new URLSearchParams(window.location.search);
+
+// Retrieve the value of the 'uid' parameter
+      const temp_uid = urlParams.get('uid');
+      const temp_password = urlParams.get('password');
+      console.log(temp_uid+"  "+ temp_password)
+
+    if (typeof points === 'number' && !isNaN(points)) {
+        const url = 'http://127.0.0.1:8086/api/users/';
+        const body = {
+            uid: temp_uid,
+            password: temp_password,
+            score: points
+        };
+        const authOptions = {
+        mode: 'cors', // no-cors, *cors, same-origin
+        credentials: 'include', // include, same-origin, omit
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        method: 'POST', // Override the method property
+        cache: 'no-cache', // Set the cache property
+        body: JSON.stringify(body)
+    };
+        const requestOptions = {
+            method: 'PUT',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+              
+             // 'Authorization': `Bearer ${uid_temp}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body)
+        };
+
+        fetch(url, requestOptions)
+            .then(response => {
+                if (response.status !== 200) {
+                }
+
+                response.json().then(data => {
+                  console.log(data)
+                    // Handle the response data if needed
+                });
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    } else {
+        console.error('Invalid integer value.');
+    }
+}
+
+
+
+
+  </script>
+  </body>
+
+  
+</html>

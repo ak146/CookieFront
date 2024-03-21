@@ -1,0 +1,135 @@
+<style>
+    body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            background-image: url("https://paintings.pinotspalette.com/moonlit-cherry-blossom-river-hdtv.jpeg?v=10039310");
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+    form {
+        max-width: 300px; /* Adjust the width as needed */
+        margin: 0 auto; /* Center the form on the page */
+        box-shadow: 0 0 10px rgba(0, 0, 255, 0.7); /* Box shadow for a subtle effect */
+        padding: 20px;
+        border-radius: 8px; /* Add rounded corners for a modern look */
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1); /* Inner glow effect for input fields */
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        transition: box-shadow 0.3s ease; /* Add transition for a smooth effect */
+    }
+
+    input:focus {
+        outline: none; /* Remove default focus outline */
+        box-shadow: 0 0 10px rgba(0, 0, 255, 0.5); /* Change box shadow on focus for emphasis */
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0, 128, 0, 0.5); /* Box shadow for the button */
+        transition: box-shadow 0.3s ease; /* Add transition for a smooth effect */
+    }
+
+    button:hover {
+        box-shadow: 0 0 15px rgba(0, 128, 0, 1); /* Change box shadow on hover for emphasis */
+    }
+</style>
+
+<!-- Your existing HTML form goes here -->
+<!-- <form action="javascript:login_user()">
+    <!-- ... -->
+<!-- </form>
+
+<script type="module">
+    // Your existing JavaScript code goes here
+</script> -->
+
+<form action="javascript:login_user()">
+    <p><label>
+        User ID:
+        <input type="text" name="uid" id="uid" required="" />
+    </label></p>
+    <p><label>
+        Password:
+        <input type="password" name="password" id="password" required="" />
+    </label></p>
+    <p>
+        <button>Login</button>
+    </p>
+</form>
+
+<!-- 
+Below JavaScript code is designed to handle user authentication in a web application. It's written to work with a backend server that uses JWT (JSON Web Tokens) for authentication.
+
+The script defines a function when the page loads. This function is triggered when the Login button in the HTML form above is pressed. 
+ -->
+<script type="module">
+    // uri variable and options object are obtained from config.js
+
+    function login_user() {
+    // Set Authenticate endpoint
+    const url = 'http://127.0.0.1:8086/api/users/authenticate';
+
+    // Set the body of the request to include login data from the DOM
+    const body = {
+        uid: document.getElementById("uid").value,
+        password: document.getElementById("password").value,
+    };
+
+    // Change options according to Authentication requirements
+    const authOptions = {
+        mode: 'cors', // no-cors, *cors, same-origin
+        credentials: 'include', // include, same-origin, omit
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        method: 'POST', // Override the method property
+        cache: 'no-cache', // Set the cache property
+        body: JSON.stringify(body)
+    };
+
+    // Fetch JWT
+    fetch(url, authOptions)
+        .then(response => {
+            // Check if response is in the 2xx range
+            if (!response.ok) {
+                throw new Error('Authentication failed. Status: ' + response.status);
+            }
+
+            // Extract JWT from the response
+            return response.text();
+        })
+        .then(token => {
+            // Save the JWT in local storage
+           // localStorage.setItem('jwt', token);  //save uid to localstorage cookie is already saved
+            localStorage.setItem('userid',document.getElementById("uid").value)
+            console.log(localStorage.getItem('userid'))
+            const uidValue = encodeURIComponent(document.getElementById("uid").value);
+            const passwordValue = encodeURIComponent(document.getElementById("password").value);
+            const url = "cookieclicker.html?uid=" + uidValue + "&password=" + passwordValue;
+            //const url = "cookieclicker.html"
+            window.location.href = url;
+        })
+        // catch fetch errors (i.e., ACCESS to server blocked)
+        .catch(err => {
+            console.error('Error during authentication:', err.message);
+        });
+}
+
+    // Attach login_user to the window object, allowing access to form action
+    window.login_user = login_user;
+</script>
