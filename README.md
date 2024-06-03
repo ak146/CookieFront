@@ -68,3 +68,7 @@ If you guess correctly, you double your wagered points.
 If you guess incorrectly, you lose your wagered points.
 API Integration
 The game integrates with a backend API to persist player scores. The score is updated on the server every time the player clicks the cookie.
+
+
+https://github.com/IshanCornick/Real-Estate-Frontend Link to original repo
+
