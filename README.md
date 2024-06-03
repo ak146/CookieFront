@@ -1,0 +1,1 @@
+Welcome to the Cookie Clicker Game! This is a fun and addictive incremental game where the goal is to bake as many cookies as possible by clicking on a giant cookie on the screen. As you bake more cookies, you can purchase upgrades and hire workers to help you bake even more cookies automatically.
